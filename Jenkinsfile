@@ -20,18 +20,18 @@ pipeline {
         stage('Push image to Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u javatechie -p ${dockerhubpwd}'
+                    withCredentials([string(credentialsId: 'docker-pwd', variable: 'docker')]) {
+                   sh 'docker login -u raam2023 -p ${docker-pwd}'
 
 }
-                   sh 'docker push javatechie/devops-integration'
+                   sh 'docker push raam2023/kubernetes'
                 }
             }
         }
         stage('Deploy to k8s'){
             steps{
                 script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'kubeconfig')
                 }
             }
         }
